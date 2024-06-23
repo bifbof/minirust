@@ -181,6 +181,7 @@ pub enum IntRel {
     /// inequal
     Ne,
 }
+
 pub enum BoolBinOp {
     /// Bitwise-and on booleans.
     BitAnd,
@@ -192,6 +193,9 @@ pub enum BoolBinOp {
 pub enum BinOp {
     /// An operation on integers (both must have the same type); returns an integer of the same type.
     Int(IntBinOp),
+    /// An operation on integers (both must have same type); returns a tuple of integer of the same type
+    /// and a boolean that is true if the result is not equal to the infinite-precision result.
+    IntWithOverflow(IntBinOp),
     /// A relation between integers (both must have the same type); returns a boolean.
     IntRel(IntRel),
     /// Pointer arithmetic (with or without inbounds requirement);

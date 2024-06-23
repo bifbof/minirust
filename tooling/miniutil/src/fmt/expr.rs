@@ -182,6 +182,18 @@ pub(super) fn fmt_value_expr(v: ValueExpr, comptypes: &mut Vec<CompType>) -> Fmt
 
             FmtExpr::NonAtomic(format!("{l} {int_op} {r}"))
         }
+        ValueExpr::BinOp { operator: BinOp::IntWithOverflow(op), left, right } => {
+            let l = fmt_value_expr(left.extract(), comptypes).to_atomic_string();
+            let r = fmt_value_expr(right.extract(), comptypes).to_atomic_string();
+
+            let name = match op {
+                IntBinOp::Add => "Add",
+                IntBinOp::Sub => "Sub",
+                IntBinOp::Mul => "Mul",
+                _ => panic!("unsupported op for IntWithOverflow"),
+            };
+            FmtExpr::Atomic(format!("{name}Checked({l}, {r})"))
+        }
         ValueExpr::BinOp { operator: BinOp::IntRel(rel), left, right } => {
             let rel = match rel {
                 IntRel::Lt => "<",

@@ -187,5 +187,14 @@ impl IntType {
     pub fn bring_in_bounds(&self, i: Int) -> Int {
         i.bring_in_bounds(self.signed, self.size)
     }
+
+    /// Generate the return type for IntWithOverflow
+    pub fn overflow_type<T: Target>(&self) -> Type {
+        let self_ty = Type::Int(*self); 
+        let fields = list![(Size::ZERO, self_ty), (self_ty.size::<T>(), Type::Bool)];
+        let size = self_ty.size::<T>() + self_ty.size::<T>();
+        let align = self_ty.align::<T>();
+        Type::Tuple{ fields, size, align }
+    }
 }
 ```
