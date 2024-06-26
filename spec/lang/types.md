@@ -194,7 +194,7 @@ impl IntType {
     pub fn overflow_type<T: Target>(&self) -> Type {
         let self_ty = Type::Int(*self); 
         let fields = list![(Size::ZERO, self_ty), (self_ty.size::<T>(), Type::Bool)];
-        let size = self_ty.size::<T>() + self_ty.size::<T>();
+        let size = self_ty.size::<T>() * Int::from(2);
         let align = self_ty.align::<T>();
         Type::Tuple { fields, size, align }
     }
