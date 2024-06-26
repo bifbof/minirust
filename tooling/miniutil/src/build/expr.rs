@@ -149,7 +149,7 @@ pub fn bit_xor(l: ValueExpr, r: ValueExpr) -> ValueExpr {
     int_binop(IntBinOp::BitXor, l, r)
 }
 
-fn int_overflow(op: IntBinOp, l: ValueExpr, r: ValueExpr) -> ValueExpr {
+fn int_overflow(op: IntBinOpWithOverflow, l: ValueExpr, r: ValueExpr) -> ValueExpr {
     ValueExpr::BinOp {
         operator: BinOp::IntWithOverflow(op),
         left: GcCow::new(l),
@@ -158,13 +158,13 @@ fn int_overflow(op: IntBinOp, l: ValueExpr, r: ValueExpr) -> ValueExpr {
 }
 
 pub fn overflow_add(l: ValueExpr, r: ValueExpr) -> ValueExpr {
-    int_overflow(IntBinOp::Add, l, r)
+    int_overflow(IntBinOpWithOverflow::Add, l, r)
 }
 pub fn overflow_sub(l: ValueExpr, r: ValueExpr) -> ValueExpr {
-    int_overflow(IntBinOp::Sub, l, r)
+    int_overflow(IntBinOpWithOverflow::Sub, l, r)
 }
 pub fn overflow_mul(l: ValueExpr, r: ValueExpr) -> ValueExpr {
-    int_overflow(IntBinOp::Mul, l, r)
+    int_overflow(IntBinOpWithOverflow::Mul, l, r)
 }
 
 fn int_rel(op: IntRel, l: ValueExpr, r: ValueExpr) -> ValueExpr {

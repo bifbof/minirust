@@ -341,17 +341,11 @@ impl ValueExpr {
                         }
                         Type::Int(left)
                     }
-                    IntWithOverflow(int_op) => {
+                    IntWithOverflow(_int_op) => {
                         let Type::Int(int_ty) = left else {
                             throw_ill_formed!("BinOp::IntWithOverflow: invalid left type");
                         };
                         ensure_wf(right == Type::Int(int_ty), "BinOp::IntWithOverflow: invalid right type")?;
-                        match int_op {
-                            IntBinOp::Add | IntBinOp::Sub | IntBinOp::Mul => {}
-                            _ => throw_ill_formed!(
-                                "BinOp::IntWithOverflow: op is not available as overflow variant"
-                            ),
-                        };
                         int_ty.overflow_type::<T>()
                     }
                     IntRel(_int_rel) => {

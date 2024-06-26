@@ -463,25 +463,3 @@ fn overflow_ill_formed_right() {
     let p = p.finish_program(f);
     assert_ill_formed(p, "BinOp::IntWithOverflow: invalid right type");
 }
-
-#[test]
-fn overflow_ill_formed_invalid_op() {
-    let ty =
-        tuple_ty(&[(Size::ZERO, i32::get_type()), (size(4), bool::get_type())], size(8), align(4));
-    let mut p = ProgramBuilder::new();
-
-    let mut f = p.declare_function();
-    let loc = f.declare_local_with_ty(ty);
-    f.storage_live(loc);
-    let expr = ValueExpr::BinOp {
-        operator: BinOp::IntWithOverflow(IntBinOp::Div),
-        left: GcCow::new(const_int(4)),
-        right: GcCow::new(const_int(2)),
-    };
-    f.assign(loc, expr);
-    f.exit();
-    let f = p.finish_function(f);
-
-    let p = p.finish_program(f);
-    assert_ill_formed(p, "BinOp::IntWithOverflow: op is not available as overflow variant")
-}

@@ -207,7 +207,11 @@ impl<M: Memory> Machine<M> {
         let Value::Int(right) = right else { panic!("non-integer input to integer operation") };
 
         // Perform the operation.
-        let result = self.eval_int_bin_op(op, left, right, int_ty)?;
+        let result = match op {
+            IntBinOpWithOverflow::Add => left + right,
+            IntBinOpWithOverflow::Sub => left - right,
+            IntBinOpWithOverflow::Mul => left * right,
+        };
         let overflow = !int_ty.can_represent(result);
         // Put the result into the right range (in case of overflow).
         let result = int_ty.bring_in_bounds(result);

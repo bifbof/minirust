@@ -75,9 +75,9 @@ impl<'cx, 'tcx> FnCtxt<'cx, 'tcx> {
                 let r = GcCow::new(self.translate_operand_smir(r, span));
 
                 let op = match op {
-                    smir::BinOp::Add => BinOp::IntWithOverflow(IntBinOp::Add),
-                    smir::BinOp::Sub => BinOp::IntWithOverflow(IntBinOp::Sub),
-                    smir::BinOp::Mul => BinOp::IntWithOverflow(IntBinOp::Mul),
+                    smir::BinOp::Add => BinOp::IntWithOverflow(IntBinOpWithOverflow::Add),
+                    smir::BinOp::Sub => BinOp::IntWithOverflow(IntBinOpWithOverflow::Sub),
+                    smir::BinOp::Mul => BinOp::IntWithOverflow(IntBinOpWithOverflow::Mul),
                     x => panic!("CheckedBinaryOp {x:?} not supported."),
                 };
                 ValueExpr::BinOp { operator: op, left: l, right: r }
