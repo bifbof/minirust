@@ -1,4 +1,6 @@
 #![feature(unchecked_shifts)]
+use std::cmp::Ordering;
+
 fn black_box<T>(t: T) -> T { t }
 
 fn main() {
@@ -30,6 +32,9 @@ fn main() {
     // FIXME: this fails to translate
     // assert!(black_box(41_i32).checked_add(1) == Some(42));
     // assert!(black_box(i32::MAX).checked_add(1) == None);
+    assert!(black_box(42).cmp(&41) == Ordering::Greater);
+    assert!(black_box(42).cmp(&42) == Ordering::Equal);
+    assert!(black_box(42).cmp(&43) == Ordering::Less);
 
     assert!(black_box(10) > 2);
     assert!(black_box(10) >= 2);
