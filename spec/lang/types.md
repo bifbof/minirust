@@ -196,7 +196,7 @@ impl IntType {
         let fields = list![(Size::ZERO, self_ty), (self_ty.size::<T>(), Type::Bool)];
         let size = self_ty.size::<T>() + self_ty.size::<T>();
         let align = self_ty.align::<T>();
-        Type::Tuple{ fields, size, align }
+        Type::Tuple { fields, size, align }
     }
 }
 ```
