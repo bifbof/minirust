@@ -206,7 +206,7 @@ impl<'cx, 'tcx> FnCtxt<'cx, 'tcx> {
                     if !self.functions.contains_key(function_name) {
                         let ret = LocalName(Name::from_internal(0));
                         let arg = LocalName(Name::from_internal(1));
-    
+
                         let b0_name = BbName(Name::from_internal(0));
                         let assign = Statement::Assign {
                             destination: PlaceExpr::Local(ret),
@@ -216,14 +216,14 @@ impl<'cx, 'tcx> FnCtxt<'cx, 'tcx> {
                             statements: list![assign],
                             terminator: Terminator::Return,
                         };
-    
+
                         let mut blocks = Map::new();
                         blocks.insert(b0_name, b0);
-    
+
                         let mut locals = Map::new();
                         locals.insert(ret, <bool>::get_type());
                         locals.insert(arg, <bool>::get_type());
-    
+
                         let function = Function {
                             locals,
                             args: list![arg],
