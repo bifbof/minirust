@@ -192,10 +192,13 @@ impl IntType {
 
     /// Generate the return type for IntWithOverflow
     pub fn overflow_type<T: Target>(&self) -> Type {
-        let self_ty = Type::Int(*self); 
+        // Define a tuple type with two fields: An integer followed directly by a boolean.
+        let self_ty = Type::Int(*self);
         let fields = list![(Size::ZERO, self_ty), (self_ty.size::<T>(), Type::Bool)];
-        let size = self_ty.size::<T>() * Int::from(2);
+        // Alignment is always the one of the integer as boolean has align requirement 1.
         let align = self_ty.align::<T>();
+        // As size is multiple of alignment boolean occupies space of integer size.
+        let size = self_ty.size::<T>() * Int::from(2);
         Type::Tuple { fields, size, align }
     }
 }

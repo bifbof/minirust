@@ -29,9 +29,8 @@ fn main() {
     assert!(unsafe { black_box(i32::MIN).unchecked_shl(1u32) } == 0);
     assert!(unsafe { black_box(-1_i32).unchecked_shr(1u32) } == -1);
     assert!(unsafe { black_box(84_i32).unchecked_shr(1u32) } == 42);
-    // FIXME: this fails to translate
-    // assert!(black_box(41_i32).checked_add(1) == Some(42));
-    // assert!(black_box(i32::MAX).checked_add(1) == None);
+    assert!(black_box(41_i32).checked_add(1) == Some(42));
+    assert!(black_box(i32::MAX).checked_add(1) == None);
     assert!(black_box(42).cmp(&41) == Ordering::Greater);
     assert!(black_box(42).cmp(&42) == Ordering::Equal);
     assert!(black_box(42).cmp(&43) == Ordering::Less);
